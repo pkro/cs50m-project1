@@ -1,6 +1,8 @@
 Implementation of project 1 for the CS50 Mobile 2019 edx / harvardx online course by peerky (edx username)
 
-A new expo project had to be created instead of the downloaded one due to version conflicts.
+Necessary changes to Requirements / instructions:
+- A new expo project had to be created instead of the downloaded one due to older version conflicts.
+- Module expo-constants had to be installed because importing Constants directly form expo is deprecated
 
 # Project 1 - Pomodoro Timer
 For this project, you'll be implementing a Pomodoro timer. This timer will help
