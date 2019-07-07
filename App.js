@@ -29,7 +29,9 @@ press pause ->
     - button text = "start"
     - currentMode = paused
     - interval = null
-
+change worktime:
+ - set pause state
+ - update worktime (also displayed time) as i type
 */
 const defValues = {
   workTime: 25 * 60,
