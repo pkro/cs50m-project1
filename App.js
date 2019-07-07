@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Alert } from 'react-native';
+import { StyleSheet, Text, View, Alert, Vibration } from 'react-native';
 import Constants from 'expo-constants';
 
 import TimerDisplay from './components/TimerDisplay';
@@ -43,6 +43,7 @@ export default class App extends React.Component {
     super();
     this.state = {
       timerIsRunning: false,
+      isWorkTime: true,
       startButtonTitle: defValues.startButtonTitle,
       pauseButtonTitle: defValues.pauseButtonTitle,
       resetButtonTitle: defValues.resetButtonTitle,
@@ -68,6 +69,7 @@ export default class App extends React.Component {
     }
     else {
       clearInterval(this.iv);
+      Vibration.vibrate([500, 500, 500]);
     }
   }
   
@@ -87,8 +89,9 @@ export default class App extends React.Component {
         timerIsRunning: false,
         startButtonTitle: defValues.startButtonTitle,
         timeRemaining: defValues.workTime,
-        workTime: defValues.workTime,
-        pauseTime: defValues.pauseTime,
+        //workTime: defValues.workTime,
+        //pauseTime: defValues.pauseTime,
+        isWorkTime: true,
       }));
 
     if(this.iv) {
@@ -97,16 +100,29 @@ export default class App extends React.Component {
   }
 
   updateTimers(work, pause) {
+    Alert.alert(`Updatetimers: ${work} ${pause}`);
     this.setState(previousState => ({
       workTime: work,
       pauseTime: pause,
+      timeRemaining: isWorkTime ? work : pause,
     }));
   }
 
   render() {
     return (
+      
       <View style={styles.container}>
         <TimerDisplay timeRemaining={this.state.timeRemaining}/>
+        
+        <View
+          style={{
+            borderWidth: 1,
+            borderColor:'black',
+            marginBottom:20,
+            width: '90%'
+          }}
+        />        
+        
         <TimerControls
           startButtontitle={this.state.startButtonTitle}
           workTime={this.state.workTime}
@@ -126,7 +142,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
   },
 });
  

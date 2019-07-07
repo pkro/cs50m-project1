@@ -16,39 +16,23 @@ class TimerControls extends Component {
         pauseTime: this.minFormat(this.props.pauseTime),
       }
   }
+
   minFormat(seconds) {
     return Math.floor(seconds / 60)
           .toString()
           .padStart(2, '0');
   }
-  updateWorktime = (e) => {
-    this.setState({workTime: e.target.value=="" ? "25": e.target.value});
-    this.props.onTimeChange(this.state.workTime, this.state.pauseTime);
-  };
 
-  updatePausetime = (e) => {
-    this.setState({pauseTime: e.target.value=="" ? "5": e.target.value});
-  };
 
   render() {
 
     return (
       <View style={styles.container}>
-        <View style={styles.textflow}>
-          <Button style={styles.button}
-            onPress={this.props.onToggle}
-            title={this.props.startButtontitle}
-          />
-          
-          <Button style={styles.button}
-            onPress={this.props.reset}
-            title="Reset"
-          />
-        </View>
+        
         <View style={styles.textflow}>
           <Text style={styles.textLarge}>Work time: </Text>
           <TextInput 
-            onChange={this.updateWorktime}
+            onChangeText={(workTime) => this.setState({workTime})}
             style={styles.numericInput} 
             keyboardType='numeric'
             maxLength={2}
@@ -61,15 +45,30 @@ class TimerControls extends Component {
         <View style={styles.textflow}>
           <Text style={styles.textLarge}>Pause time: </Text>
           <TextInput 
-            onChange={this.updatePausetime}
+            onChangeText={(pauseTime) => this.setState({pauseTime})}
             style={styles.numericInput} 
             keyboardType='numeric'
-            onFocus={() => this.setState({pauseTime: ''})}
+            //onFocus={() => this.setState({pauseTime: ''})}
             maxLength={2}
             value={this.state.pauseTime}
             />
           <Text style={styles.textLarge}> minutes</Text>
         </View>
+
+        <View style={styles.textflow}>
+          <Button style={styles.button}
+            onPress={this.props.onToggle}
+            title={this.props.startButtontitle}
+          />
+
+          <View style={styles.spacer}></View>
+        
+          <Button style={styles.button}
+            onPress={this.props.reset}
+            title="Reset"
+          />
+        </View>
+        
       </View>
     );
   }
@@ -81,11 +80,12 @@ const styles = StyleSheet.create({
     flexDirection: 'column', // row
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'space-evenly',
+    justifyContent: 'flex-start',
   },
   textflow: {
     flexDirection: 'row',
     justifyContent: 'space-evenly',
+    marginBottom: 20,
   },
 
   textLarge: {
@@ -93,6 +93,7 @@ const styles = StyleSheet.create({
   },
   numericInput: {
     height: 50,
+    width:70,
     fontSize:40,
     borderRadius: 10,  
     borderWidth: 2,  
@@ -101,12 +102,9 @@ const styles = StyleSheet.create({
     marginBottom: 10  ,
     justifyContent: 'center',
   },
-  button: {
-    flex:1,
-    paddingRight: 20,
-    marginBottom: 40,
-    marginRight: 10,
-  }
+  spacer: {
+    width: 40,
+  },
 });
 
 export default TimerControls;
