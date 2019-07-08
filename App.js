@@ -5,34 +5,8 @@ import Constants from 'expo-constants';
 import TimerDisplay from './components/TimerDisplay';
 import TimerControls from './components/TimerControls'
 
-/*
-Applogic:
-press start ->
-  - button text = "pause"
-  - currentMode = running
-  - startTime = time.now
-  - if [worktime control value] > timeRemaining
-      endTime = startTime - [worktime control value]*60*1000
-    else
-      endTime = startTime - timeRemaining
-  - displayTime = starttime - time.now 
-  - interval = setIntervall ({
-      if time.now > endTime:
-        displayTime = starttime - time.now 
-      else
-        vibrate
-        toggle time remaining font color to pause color
-        startTime = time.now
-        endTime = startTime - [pausetime control value]*60*1000
-    }, 1000)
-press pause ->
-    - button text = "start"
-    - currentMode = paused
-    - interval = null
-change worktime:
- - set pause state
- - update worktime (also displayed time) as i type
-*/
+const DEBUG = true;
+
 const defValues = {
   workTime: 25 * 60,
   pauseTime: 5 * 60,
@@ -66,11 +40,10 @@ export default class App extends React.Component {
     ));
   
     if(this.state.timerIsRunning) {
-      this.iv = setInterval( (() => (this.countDown))(), 1000);
+      this.iv = setInterval( (() => (this.countDown))(), DEBUG ? 100 : 1000);
     }
     else {
       clearInterval(this.iv);
-      Vibration.vibrate([500, 500, 500]);
     }
   }
   
@@ -80,6 +53,15 @@ export default class App extends React.Component {
           { 
             timeRemaining: previousState.timeRemaining -1,
           }
+      ));
+    }
+    else {
+      Vibration.vibrate([500, 500, 500]);
+      this.setState( previousState => (
+        {
+          timeRemaining: previousState.isWorkTime ? this.state.pauseTime : this.state.workTime,
+          isWorkTime: ! previousState.isWorkTime,
+        }
       ));
     }
   }
@@ -100,12 +82,19 @@ export default class App extends React.Component {
     }
   }
 
-  updateTimers(work, pause) {
-    Alert.alert(`Updatetimers: ${work} ${pause}`);
+  updateWorktime(minutes) {
+    console.log(this.state.isWorkTime);
     this.setState(previousState => ({
-      workTime: work,
-      pauseTime: pause,
-      timeRemaining: isWorkTime ? work : pause,
+      workTime: Number(minutes) * 60,
+      timeRemaining: this.state.isWorkTime ? Number(minutes) * 60 : previousState.timeRemaining,
+    }));
+  }
+
+  updatePausetime(minutes) {
+    console.log(this.state.isWorkTime);
+    this.setState(previousState => ({
+      pauseTime: Number(minutes) * 60,
+      timeRemaining: ! this.state.isWorkTime ? Number(minutes) * 60 : previousState.timeRemaining,
     }));
   }
 
@@ -126,11 +115,12 @@ export default class App extends React.Component {
         
         <TimerControls
           startButtontitle={this.state.startButtonTitle}
+          onUpdateWorktime={(minutes) => this.updateWorktime(minutes)}
+          onUpdatePausetime={(minutes) => this.updatePausetime(minutes)}
           workTime={this.state.workTime}
           pauseTime={this.state.pauseTime}
           onToggle={() => this.toggleTimer()}
           reset={() => this.reset()}
-          onTimeChange={() => this.updateTimers}
           /> 
       </View>
     );

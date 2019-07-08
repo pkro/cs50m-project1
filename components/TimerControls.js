@@ -23,6 +23,17 @@ class TimerControls extends Component {
           .padStart(2, '0');
   }
 
+  updateWorktime = (minutes) => {
+    console.log(minutes);
+    this.props.onUpdateWorktime(minutes);
+    this.setState({workTime: minutes});
+  };
+
+  updatePausetime = (minutes) => {
+    console.log(minutes);
+    this.props.onUpdatePausetime(minutes);
+    this.setState({pauseTime: minutes});
+  };
 
   render() {
     return (
@@ -31,11 +42,11 @@ class TimerControls extends Component {
         <View style={styles.textflow}>
           <Text style={styles.textLarge}>Work time: </Text>
           <TextInput 
-            onChangeText={(workTime) => this.setState({workTime})}
+            onChangeText={this.updateWorktime}
             style={styles.numericInput} 
             keyboardType='numeric'
             maxLength={2}
-            onFocus={() => this.setState({workTime: ''})}
+            //onFocus={() => this.setState({workTime: ''})}
             value={this.state.workTime}
             />
           <Text style={styles.textLarge}> minutes</Text>
@@ -44,7 +55,7 @@ class TimerControls extends Component {
         <View style={styles.textflow}>
           <Text style={styles.textLarge}>Pause time: </Text>
           <TextInput 
-            onChangeText={(pauseTime) => this.setState({pauseTime})}
+            onChangeText={this.updatePausetime}
             style={styles.numericInput} 
             keyboardType='numeric'
             //onFocus={() => this.setState({pauseTime: ''})}
