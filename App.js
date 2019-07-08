@@ -7,6 +7,8 @@ import TimerControls from './components/TimerControls'
 
 const DEBUG = true;
 
+// ToDo: reset time in controls to defaults on reset
+
 const defValues = {
   workTime: 25 * 60,
   pauseTime: 5 * 60,
@@ -72,8 +74,8 @@ export default class App extends React.Component {
         timerIsRunning: false,
         startButtonTitle: defValues.startButtonTitle,
         timeRemaining: defValues.workTime,
-        //workTime: defValues.workTime,
-        //pauseTime: defValues.pauseTime,
+        workTime: defValues.workTime,
+        pauseTime: defValues.pauseTime,
         isWorkTime: true,
       }));
 
