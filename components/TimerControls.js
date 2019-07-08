@@ -5,7 +5,6 @@ import {
   View,
   Button,
   TextInput,
-  Alert,
 } from 'react-native';
 
 class TimerControls extends Component {
@@ -24,13 +23,11 @@ class TimerControls extends Component {
   }
 
   updateWorktime = (minutes) => {
-    console.log(minutes);
     this.props.onUpdateWorktime(minutes);
     this.setState({workTime: minutes});
   };
 
   updatePausetime = (minutes) => {
-    console.log(minutes);
     this.props.onUpdatePausetime(minutes);
     this.setState({pauseTime: minutes});
   };
