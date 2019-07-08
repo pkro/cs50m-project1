@@ -55,7 +55,7 @@ export default class App extends React.Component {
     }
     this.iv = null;
   }
-
+  
   toggleTimer() {
     // https://facebook.github.io/react-native/docs/state
     this.setState(previousState => (
@@ -66,7 +66,6 @@ export default class App extends React.Component {
     ));
   
     if(this.state.timerIsRunning) {
-      // immediate invoked function, but why not just this.countdown?
       this.iv = setInterval( (() => (this.countDown))(), 1000);
     }
     else {
