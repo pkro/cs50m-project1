@@ -41,8 +41,7 @@ export default class App extends React.Component {
       clearInterval(this.iv);
     }
     
-
-    this.setState(previousState => (
+    this.setState(() => (
         { 
           timerIsRunning: !beforeClickTimerRunning,
           startButtonTitle: beforeClickTimerRunning ? defValues.startButtonTitle : defValues.pauseButtonTitle,
