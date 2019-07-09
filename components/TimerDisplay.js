@@ -3,9 +3,9 @@ import { StyleSheet, Text, View, Vibration } from 'react-native';
 import PropTypes from 'prop-types';
 
 class TimerDisplay extends Component {
+  
   render() {
     let time = this.props.timeRemaining;
-    console.log(time);
     let minutes = Math.floor(time / 60);
     let seconds = time - minutes * 60;
     

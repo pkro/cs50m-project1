@@ -33,20 +33,21 @@ export default class App extends React.Component {
   }
   
   toggleTimer() {
-    // https://facebook.github.io/react-native/docs/state
-    this.setState(previousState => (
-        { 
-          timerIsRunning: !previousState.timerIsRunning,
-          startButtonTitle: this.state.timerIsRunning ? "pause" : "start",
-        }
-    ));
-  
-    if(this.state.timerIsRunning) {
+    let beforeClickTimerRunning = this.state.timerIsRunning;
+    if( ! beforeClickTimerRunning) {
       this.iv = setInterval( (() => (this.countDown))(), DEBUG ? 100 : 1000);
     }
     else {
       clearInterval(this.iv);
     }
+    
+
+    this.setState(previousState => (
+        { 
+          timerIsRunning: !beforeClickTimerRunning,
+          startButtonTitle: beforeClickTimerRunning ? defValues.startButtonTitle : defValues.pauseButtonTitle,
+        }
+    ));
   }
   
   countDown = () => {
@@ -85,7 +86,6 @@ export default class App extends React.Component {
   }
 
   updateWorktime(minutes) {
-    console.log(this.state.isWorkTime);
     this.setState(previousState => ({
       workTime: Number(minutes) * 60,
       timeRemaining: this.state.isWorkTime ? Number(minutes) * 60 : previousState.timeRemaining,
@@ -93,7 +93,6 @@ export default class App extends React.Component {
   }
 
   updatePausetime(minutes) {
-    console.log(this.state.isWorkTime);
     this.setState(previousState => ({
       pauseTime: Number(minutes) * 60,
       timeRemaining: ! this.state.isWorkTime ? Number(minutes) * 60 : previousState.timeRemaining,
@@ -102,7 +101,6 @@ export default class App extends React.Component {
 
   render() {
     return (
-      
       <View style={styles.container}>
         <TimerDisplay timeRemaining={this.state.timeRemaining}/>
         
