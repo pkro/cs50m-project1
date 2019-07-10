@@ -82,6 +82,7 @@ export default class App extends React.Component {
     if(this.iv) {
       clearInterval(this.iv);
     }
+    this.refs.TimerControlsRef.reset(defValues.workTime, defValues.pauseTime);
   }
 
   updateWorktime(minutes) {
@@ -113,6 +114,7 @@ export default class App extends React.Component {
         />        
         
         <TimerControls
+          ref="TimerControlsRef"
           startButtontitle={this.state.startButtonTitle}
           onUpdateWorktime={(minutes) => this.updateWorktime(minutes)}
           onUpdatePausetime={(minutes) => this.updatePausetime(minutes)}

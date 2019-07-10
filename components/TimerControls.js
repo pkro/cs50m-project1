@@ -16,6 +16,11 @@ class TimerControls extends Component {
       }
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    // return Number(nextProps.workTime) > 0 && Number(nextProps.pauseTime) > 0
+    return true;
+  }
+
   minFormat(seconds) {
     return Math.floor(seconds / 60)
           .toString()
@@ -32,7 +37,15 @@ class TimerControls extends Component {
     this.setState({pauseTime: minutes});
   };
 
+  reset(workTime, pauseTime) {
+    this.setState(({
+      workTime: this.minFormat(workTime),
+      pauseTime: this.minFormat(pauseTime),
+    }))
+  }
+
   render() {
+    
     return (
       <View style={styles.container}>
         
@@ -59,7 +72,7 @@ class TimerControls extends Component {
             maxLength={2}
             value={this.state.pauseTime}
             />
-          <Text style={styles.textLarge}> minutes</Text>
+          <Text style={styles.textLarge}> minutes</Text> 
         </View>
 
         <View style={styles.textflow}>
