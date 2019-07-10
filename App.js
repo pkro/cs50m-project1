@@ -5,7 +5,7 @@ import Constants from 'expo-constants';
 import TimerDisplay from './components/TimerDisplay';
 import TimerControls from './components/TimerControls'
 
-const DEBUG = true;
+const DEBUG = false;
 
 const defValues = {
   workTime: 25 * 60,
