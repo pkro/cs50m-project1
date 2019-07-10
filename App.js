@@ -7,8 +7,6 @@ import TimerControls from './components/TimerControls'
 
 const DEBUG = true;
 
-// ToDo: reset time in controls to defaults on reset
-
 const defValues = {
   workTime: 25 * 60,
   pauseTime: 5 * 60,
@@ -28,6 +26,7 @@ export default class App extends React.Component {
       timeRemaining: defValues.workTime,
       workTime: defValues.workTime,
       pauseTime: defValues.pauseTime,
+      timerColor: 'red',
     }
     this.iv = null;
   }
@@ -63,6 +62,7 @@ export default class App extends React.Component {
         {
           timeRemaining: previousState.isWorkTime ? this.state.pauseTime : this.state.workTime,
           isWorkTime: ! previousState.isWorkTime,
+          timerColor: previousState.isWorkTime ? 'green' : 'red',
         }
       ));
     }
@@ -102,7 +102,9 @@ export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <TimerDisplay timeRemaining={this.state.timeRemaining}/>
+        <TimerDisplay 
+          timeRemaining={this.state.timeRemaining}
+          timerColor={this.state.timerColor}/>
         
         <View
           style={{

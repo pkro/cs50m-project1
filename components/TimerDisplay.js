@@ -8,10 +8,11 @@ class TimerDisplay extends Component {
     let time = this.props.timeRemaining;
     let minutes = Math.floor(time / 60);
     let seconds = time - minutes * 60;
-    
+
     return (
+      
       <View style={styles.container}>
-        <Text style={[styles.timer, styles.work]}>
+        <Text style={[styles.timer, styles[this.props.timerColor]]}>
           {minutes.toString().padStart(2, '0')}:{seconds.toString().padStart(2, '0')}
         </Text>
       </View> 
@@ -28,11 +29,11 @@ const styles = StyleSheet.create({
   timer: {
     fontSize: 100,
   },
-  work: {
+  red: {
     color: 'red',
   },
-  pause: {
-    color: 'orange',
+  green: {
+    color: 'green',
   },
 });
 
